@@ -23,9 +23,11 @@ https://siv-the-programmer.github.io/sivportfolio
 https://github.com/siv-the-programmer
 
 # Donate
-[![Buy Me a Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-support%20me-FFDD00?logo=buymeacoffee&logoColor=000000)](https://buymeacoffee.com/sivariob)
 
-[(buymeacoffee.com/sivariob)]
+<a href="https://buymeacoffee.com/sivariob" target="_blank" rel="noopener">
+  <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me a Coffee" style="height: 60px !important; width: 217px !important;">
+</a>
+
 
 
 
