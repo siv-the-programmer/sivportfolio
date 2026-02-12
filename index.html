@@ -1,656 +1,821 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-
-<title>Siv | Python • Cloud • Automation</title>
-<meta name="description" content="Python-first automation projects across AWS, Bash, and web builds. Proof lives in GitHub.">
-
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sivario Buchanan | Python Cloud Engineer</title>
 <style>
-:root{
-  --bg:lab(3.58% -0.05 -1.65);
-  --panel:#111418;
-  --panel2:#151a21;
-  --ink:#e9e9ee;
-  --muted:#9aa0aa;
-  --line:#222733;
-  --accent:#3b82f6;
-  --radius:16px;
-  --max:1100px;
-  --shadow: 0 18px 50px rgba(0,0,0,.35);
-  --shadow2: 0 10px 24px rgba(0,0,0,.28);
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-*{box-sizing:border-box}
-html,body{height:100%}
-
-body{
-  margin:0;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-  background:var(--bg);
-  color:var(--ink);
+:root {
+  --bg: #0a0e17;
+  --card-bg: #111827;
+  --text: #f9fafb;
+  --text-muted: #9ca3af;
+  --blue: #3b82f6;
+  --purple: #8b5cf6;
+  --cyan: #06b6d4;
 }
 
-a{color:inherit;text-decoration:none}
-.container{max-width:var(--max);margin:auto;padding:28px 20px 80px}
-
-/* header */
-header{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:14px;
-  margin-bottom:58px;
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
-.brand{font-weight:950;letter-spacing:.4px}
-.brand span{
-  display:block;
-  font-size:12px;
-  color:var(--muted);
-  font-weight:650;
-  margin-top:3px;
+/* Animated Background */
+.bg-gradient {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.3;
+  pointer-events: none;
 }
 
-.nav{
-  display:flex;
-  gap:10px;
-  flex-wrap:wrap;
-  justify-content:flex-end;
-}
-.nav a{
-  color:var(--muted);
-  font-size:14px;
-  padding:8px 10px;
-  border-radius:12px;
-  border:1px solid transparent;
-}
-.nav a:hover{
-  color:var(--ink);
-  border-color:var(--line);
-  background:rgba(255,255,255,.03);
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(100px);
+  animation: float 20s ease-in-out infinite;
 }
 
-/* hero */
-.hero{max-width:900px}
-.hero h1{
-  font-size:clamp(34px,5vw,58px);
-  line-height:1.04;
-  letter-spacing:-1px;
-  margin:0 0 14px;
-}
-.hero p{
-  color:var(--muted);
-  font-size:16px;
-  line-height:1.7;
-  max-width:820px;
-  margin:0;
+.orb1 {
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, var(--blue) 0%, transparent 70%);
+  top: -150px;
+  left: -150px;
 }
 
-.cta{
-  margin-top:24px;
-  display:flex;
-  gap:12px;
-  flex-wrap:wrap;
-  align-items:center;
+.orb2 {
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+  top: 40%;
+  right: -100px;
+  animation-delay: 7s;
 }
 
-.btn{
-  padding:12px 18px;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:var(--panel);
-  color:var(--ink);
-  font-weight:900;
-  cursor:pointer;
-  transition: transform .06s ease, box-shadow .2s ease, background .2s ease, border-color .2s ease;
-  display:inline-flex;
-  align-items:center;
-  gap:10px;
-}
-.btn:hover{
-  background:rgba(255,255,255,.06);
-  box-shadow: var(--shadow2);
-}
-.btn:active{ transform: translateY(1px); }
-
-.btn.primary{
-  background:var(--accent);
-  border:none;
-  color:white;
-}
-.btn.ghost{ background:transparent; }
-.btn.icon{
-  width:44px;height:44px;
-  justify-content:center;
-  padding:0;
+.orb3 {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, var(--cyan) 0%, transparent 70%);
+  bottom: -50px;
+  left: 30%;
+  animation-delay: 14s;
 }
 
-.pills{
-  margin-top:18px;
-  display:flex;
-  flex-wrap:wrap;
-  gap:8px;
-}
-.pill{
-  font-size:12px;
-  color:rgba(255,255,255,.86);
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.18);
-  padding:7px 10px;
-  border-radius:999px;
+@keyframes float {
+  0%, 100% { transform: translate(0, 0); }
+  50% { transform: translate(50px, -50px); }
 }
 
-/* sections */
-.section{margin-top:90px}
-.section h2{
-  font-size:20px;
-  margin:0 0 14px;
-  font-weight:950;
-  letter-spacing:-.2px;
-}
-.section .lead{
-  margin:0 0 18px;
-  color:var(--muted);
-  font-size:14px;
-  line-height:1.7;
-  max-width:900px;
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  position: relative;
+  z-index: 1;
 }
 
-/* cards grid */
-.grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  gap:18px;
+/* Navigation */
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  backdrop-filter: blur(20px);
+  background: rgba(10, 14, 23, 0.8);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  z-index: 100;
 }
 
-.card{
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:20px;
-  transition: transform .08s ease, background .2s ease, box-shadow .2s ease, border-color .2s ease;
+.nav-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1.5rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
-.card:hover{
+
+.logo {
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+nav ul {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav a:hover {
+  color: var(--text);
+}
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+}
+
+.hero h1 {
+  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #fff, var(--blue), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: -2px;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  max-width: 700px;
+  line-height: 1.7;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.2rem;
+  background: rgba(59, 130, 246, 0.1);
+  border: 1px solid rgba(59, 130, 246, 0.3);
+  border-radius: 50px;
+  color: var(--blue);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.pulse {
+  width: 8px;
+  height: 8px;
+  background: var(--blue);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.tag {
+  padding: 0.7rem 1.4rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  font-weight: 600;
+  transition: all 0.3s;
+}
+
+.tag:hover {
+  transform: translateY(-3px);
+  border-color: var(--blue);
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
+}
+
+.buttons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.btn {
+  padding: 1rem 2rem;
+  border-radius: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: white;
+  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-3px);
+}
+
+/* Sections */
+section {
+  padding: 6rem 0;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.section-tag {
+  display: inline-block;
+  padding: 0.5rem 1.5rem;
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  border-radius: 50px;
+  color: var(--purple);
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+h2 {
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 900;
+  margin-bottom: 1rem;
+  letter-spacing: -1px;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  color: var(--text-muted);
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+/* Grid */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+}
+
+.card {
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2.5rem;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  transform: scaleX(0);
+  transition: transform 0.3s;
+}
+
+.card:hover::before {
+  transform: scaleX(1);
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 20px 50px rgba(59, 130, 246, 0.2);
+}
+
+.card-icon {
+  width: 60px;
+  height: 60px;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+  margin-bottom: 1.5rem;
+  color: white;
+}
+
+.card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.card p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* Stats */
+.stats {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+  border-radius: 30px;
+  padding: 3rem;
+  margin: 3rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  text-align: center;
+}
+
+.stat h4 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin-bottom: 0.5rem;
+}
+
+.stat p {
+  color: var(--text-muted);
+}
+
+/* Projects Slider */
+.slider {
+  overflow-x: auto;
+  display: flex;
+  gap: 2rem;
+  padding: 2rem 0;
+  scroll-snap-type: x mandatory;
+}
+
+.slider::-webkit-scrollbar {
+  height: 8px;
+}
+
+.slider::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.slider::-webkit-scrollbar-thumb {
+  background: linear-gradient(90deg, var(--blue), var(--purple));
+  border-radius: 10px;
+}
+
+.project-card {
+  min-width: 380px;
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 2rem;
+  scroll-snap-align: start;
+  transition: all 0.3s;
+}
+
+.project-card:hover {
+  transform: scale(1.05);
+  border-color: rgba(59, 130, 246, 0.3);
+  box-shadow: 0 20px 50px rgba(59, 130, 246, 0.3);
+}
+
+.project-tag {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  background: rgba(6, 182, 212, 0.1);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  border-radius: 50px;
+  color: var(--cyan);
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.project-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.project-card p {
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.project-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.project-link {
+  padding: 0.7rem 1.4rem;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.3s;
+}
+
+.link-primary {
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  color: white;
+}
+
+.link-primary:hover {
   transform: translateY(-2px);
-  background:rgba(255,255,255,.05);
-  box-shadow: var(--shadow);
-  border-color:rgba(255,255,255,.10);
-}
-.card h3{margin:0 0 6px;font-size:16px;font-weight:950}
-.card p{margin:0;color:var(--muted);font-size:14px;line-height:1.6}
-
-/* about */
-.about{
-  display:grid;
-  grid-template-columns: 1.25fr .75fr;
-  gap:18px;
-  align-items:start;
-}
-@media(max-width:900px){ .about{grid-template-columns:1fr} }
-
-.about-box{
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:22px;
-}
-.about-box h3{margin:0 0 10px;font-size:16px;font-weight:950}
-.about-box p{margin:0;color:var(--muted);font-size:14px;line-height:1.75}
-
-.kv{display:grid;gap:10px;margin-top:14px}
-.kv .row{
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  padding:12px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.18);
-  font-size:13px;
-  color:rgba(255,255,255,.88);
-}
-.kv .row span{color:var(--muted)}
-.kv .row b{font-weight:900}
-
-/* python focus */
-.badge-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:10px;
-  margin-top:14px;
-}
-.badge{
-  font-size:12px;
-  padding:8px 10px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:rgba(59,130,246,.12);
-  color:rgba(255,255,255,.9);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
 }
 
-/* slider */
-.slider-wrap{
-  margin-top:18px;
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:14px;
-}
-.slider-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:10px;
-  margin-bottom:10px;
-  flex-wrap:wrap;
-}
-.slider-title{
-  display:flex;
-  gap:10px;
-  align-items:baseline;
-  flex-wrap:wrap;
-}
-.slider-title b{font-size:14px}
-.slider-title span{font-size:12px;color:var(--muted)}
-.controls{display:flex;gap:10px;align-items:center}
-.chip{
-  font-size:12px;
-  padding:7px 10px;
-  border-radius:999px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.18);
-  color:rgba(255,255,255,.9);
-  cursor:pointer;
-}
-.chip:hover{background:rgba(255,255,255,.06)}
-.track{
-  display:flex;
-  gap:14px;
-  overflow:auto;
-  scroll-snap-type:x mandatory;
-  padding:6px 4px 10px;
-  -webkit-overflow-scrolling:touch;
-}
-.track::-webkit-scrollbar{height:8px}
-.track::-webkit-scrollbar-thumb{background:rgba(255,255,255,.10);border-radius:999px}
-.track::-webkit-scrollbar-track{background:rgba(255,255,255,.04);border-radius:999px}
-
-.slide{
-  min-width:280px;
-  max-width:280px;
-  scroll-snap-align:start;
-  background:var(--panel);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:16px;
-  transition: transform .08s ease, background .2s ease, box-shadow .2s ease;
-}
-.slide:hover{
-  transform: translateY(-2px);
-  background:rgba(255,255,255,.05);
-  box-shadow: var(--shadow2);
-}
-.slide .kicker{color:var(--muted);font-size:12px;margin-bottom:8px}
-.slide h3{margin:0 0 8px;font-size:15px;font-weight:950}
-.slide p{margin:0 0 12px;color:var(--muted);font-size:13px;line-height:1.6}
-.slide .links{display:flex;gap:10px;flex-wrap:wrap}
-
-.smallbtn{
-  padding:9px 12px;
-  border-radius:12px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.18);
-  font-size:13px;
-  font-weight:850;
-}
-.smallbtn:hover{background:rgba(255,255,255,.06)}
-.smallbtn.primary{
-  background:rgba(59,130,246,.16);
-  border-color:rgba(59,130,246,.45);
+.link-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.note{margin-top:14px;color:var(--muted);font-size:12px;line-height:1.7}
-
-/* contact */
-.contact{
-  background:var(--panel2);
-  border:1px solid var(--line);
-  border-radius:var(--radius);
-  padding:22px;
-  max-width:820px;
+.link-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
-.contact-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:12px;
-  flex-wrap:wrap;
-  padding:14px;
-  border-radius:14px;
-  border:1px solid var(--line);
-  background:rgba(0,0,0,.18);
+
+/* Contact */
+.contact-box {
+  max-width: 600px;
+  margin: 3rem auto;
+  background: rgba(17, 24, 39, 0.7);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 30px;
+  padding: 3rem;
+  text-align: center;
 }
-.contact-row b{font-size:15px}
-.contact-row .label{color:var(--muted);font-size:12px;margin-bottom:4px}
 
-footer{margin-top:90px;font-size:12px;color:var(--muted)}
+.contact-box h3 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
 
-@media(max-width:700px){
-  header{flex-direction:column;align-items:flex-start;gap:14px}
-  .slide{min-width:260px;max-width:260px}
+.contact-box p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+}
+
+.social-links {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.social-link {
+  width: 50px;
+  height: 50px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: var(--text);
+  font-weight: 700;
+  transition: all 0.3s;
+}
+
+.social-link:hover {
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
+}
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--text-muted);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+  nav ul {
+    gap: 1rem;
+  }
+  
+  .hero {
+    padding-top: 120px;
+  }
+  
+  section {
+    padding: 4rem 0;
+  }
+  
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .project-card {
+    min-width: 300px;
+  }
+  
+  .stats {
+    padding: 2rem;
+  }
 }
 </style>
 </head>
-
 <body>
-<div class="container">
 
-<header>
-  <div class="brand">
-    Sivario Buchanan
-    <span>Python • AWS • Automation • Projects</span>
+<!-- Background -->
+<div class="bg-gradient">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+</div>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-content">
+    <div class="logo">SIV</div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
   </div>
+</nav>
 
-  <nav class="nav">
-    <a href="#about">About</a>
-    <a href="#python">Python</a>
-    <a href="#projects">Projects</a>
-    <a href="#stack">Stack</a>
-    <a href="#now">Now</a>
-    <a href="#contact">Contact</a>
-  </nav>
-</header>
+<!-- Hero -->
+<section class="hero">
+  <div class="container">
+    <div class="status">
+      <span class="pulse"></span>
+      Available for Cloud Engineering Roles
+    </div>
+    <h1>Sivario Buchanan</h1>
+    <p>Cloud automation engineer building production-grade Python tools for AWS infrastructure. Turning manual workflows into reliable, repeatable systems.</p>
+    
+    <div class="tech-tags">
+      <span class="tag">Python</span>
+      <span class="tag">boto3</span>
+      <span class="tag">AWS</span>
+      <span class="tag">IAM</span>
+      <span class="tag">S3</span>
+      <span class="tag">EC2</span>
+      <span class="tag">CloudWatch</span>
+      <span class="tag">Bash</span>
+    </div>
 
-<section class="hero">  
-  <p>
-    I build repeatable workflows: scripts that reduce manual steps, make systems safer, and keep deployments predictable.
-    This page is a curated index — the full proof (code, READMEs, commit history) lives on GitHub.
-  </p>
-
-  <div class="pills" aria-label="focus areas">
-    <span class="pill">Python</span>
-    <span class="pill">boto3</span>
-    <span class="pill">IAM</span>
-    <span class="pill">S3 + CloudFront</span>
-    <span class="pill">EC2</span>
-    <span class="pill">CloudWatch</span>
-    <span class="pill">Bash + Linux</span>
-  </div>
-
-  <div class="cta">
-    <a class="btn primary" href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">
-      View GitHub
-    </a>
-    <a class="btn ghost" href="#projects">Browse projects</a>
-    <a class="btn ghost"
-       href="mailto:sivariobuch@gmail.com?subject=Hello%20Siv&body=Hi%20Siv%2C%0A%0ARepo%20link%3A%0AContext%3A%0AWhat%20you%20want%20to%20achieve%3A%0AConstraints%20(time%2Fbudget)%3A%0A%0AThanks%2C">
-      Email
-    </a>
-
-    <a class="btn icon ghost" href="https://www.instagram.com/sivbuchanan" target="_blank" rel="noopener" aria-label="Instagram"><span aria-hidden="true">IG</span></a>
-    <a class="btn icon ghost" href="https://www.linkedin.com/in/sivario-buchanan-546a40386" target="_blank" rel="noopener" aria-label="LinkedIn"><span aria-hidden="true">in</span></a>
+    <div class="buttons">
+      <a href="https://github.com/siv-the-programmer" target="_blank" class="btn btn-primary">View GitHub</a>
+      <a href="#projects" class="btn btn-secondary">Explore Projects</a>
+      <a href="mailto:sivariobuch@gmail.com" class="btn btn-secondary">Get in Touch</a>
+    </div>
   </div>
 </section>
 
-<section class="section" id="about">
-  <h2>About</h2>
-  <p class="lead">
-    I’m building toward cloud engineering through a Python-first approach: automate the boring parts,
-    document the system, and make it easy to run again tomorrow.
-  </p>
+<!-- About -->
+<section id="about">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">About Me</span>
+      <h2>Building the Future</h2>
+      <p class="subtitle">I automate the boring parts, document the system, and make it easy to run again tomorrow.</p>
+    </div>
 
-  <div class="about">
-    <div class="about-box">
-      <h3>How I build</h3>
-      <p>
-        I focus on repeatability: scripts over click-steps, least-privilege over “admin everywhere,”
-        and clear READMEs that explain what the project does and how to run it.
-        When something breaks, I want logs and structure that make the fix obvious.
-      </p>
-
-      <div class="kv" aria-label="quick facts">
-        <div class="row"><span>Core skill</span> <b>Python automation</b></div>
-        <div class="row"><span>Cloud focus</span> <b>AWS fundamentals</b></div>
-        <div class="row"><span>Mindset</span> <b>security + cost + clarity</b></div>
+    <div class="stats">
+      <div class="stats-grid">
+        <div class="stat">
+          <h4>Python</h4>
+          <p>Primary Language</p>
+        </div>
+        <div class="stat">
+          <h4>AWS</h4>
+          <p>Cloud Platform</p>
+        </div>
+        <div class="stat">
+          <h4>boto3</h4>
+          <p>Automation Tool</p>
+        </div>
+        <div class="stat">
+          <h4>24/7</h4>
+          <p>Reliability</p>
+        </div>
       </div>
     </div>
 
     <div class="grid">
       <div class="card">
-        <h3>Why Python</h3>
-        <p>It’s the fastest path from idea → script → reliable workflow (and boto3 makes AWS programmable).</p>
+        <div class="card-icon">→</div>
+        <h3>Philosophy</h3>
+        <p>Scripts over click-steps, least-privilege over "admin everywhere," and clear documentation that makes fixes obvious.</p>
       </div>
       <div class="card">
-        <h3>What I practice</h3>
-        <p>Small tools, clean repo structure, and building habits that scale past beginner projects.</p>
+        <div class="card-icon">⚡</div>
+        <h3>Approach</h3>
+        <p>If it needs a checklist every time, it should become a command. Repeatability is king.</p>
       </div>
       <div class="card">
-        <h3>What you’ll see</h3>
-        <p>Automation scripts, cloud setups, and deployable projects with practical documentation.</p>
+        <div class="card-icon">◆</div>
+        <h3>Mindset</h3>
+        <p>Security + cost awareness + clarity. Clean structure over "it works once."</p>
       </div>
     </div>
   </div>
 </section>
 
-<section class="section" id="python">
-  <h2>Python (primary)</h2>
-  <p class="lead">
-    My main focus is Python for automation — scripting AWS tasks with boto3 and building CLI tooling that makes work repeatable.
-  </p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>AWS automation (boto3)</h3>
-      <p>Program AWS tasks (IAM, S3, EC2) with predictable scripts instead of manual console steps.</p>
+<!-- Skills -->
+<section id="skills">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Core Skills</span>
+      <h2>Tech Arsenal</h2>
+      <p class="subtitle">Python-first automation with AWS fundamentals and disciplined engineering practices.</p>
     </div>
-    <div class="card">
-      <h3>CLI tooling</h3>
-      <p>Small command-line apps with clean inputs, safe defaults, and clear output.</p>
-    </div>
-    <div class="card">
-      <h3>Reliability basics</h3>
-      <p>Logging + error handling so scripts fail loudly instead of silently doing the wrong thing.</p>
-    </div>
-    <div class="card">
-      <h3>Clean structure</h3>
-      <p>Simple modules, reusable helpers, and consistent repo layouts so projects stay maintainable.</p>
-    </div>
-  </div>
 
-  <div class="badge-row" aria-label="python focus badges">
-    <span class="badge">Python automation</span>
-    <span class="badge">boto3</span>
-    <span class="badge">CLI scripts</span>
-    <span class="badge">logging</span>
-    <span class="badge">error handling</span>
-    <span class="badge">clean repo structure</span>
-  </div>
-
-  <p class="note">
-    Rule: if a task can be done twice, it should become a script.
-  </p>
-</section>
-
-<section class="section" id="projects">
-  <h2>Projects</h2>
-
-  <div class="slider-wrap">
-    <div class="slider-top">
-      <div class="slider-title">
-        <b>Featured repositories</b>
-        <span>Scroll horizontally • or use arrows</span>
+    <div class="grid">
+      <div class="card">
+        <div class="card-icon">P</div>
+        <h3>Python Automation</h3>
+        <p>boto3 for AWS tasks, CLI tooling patterns, structured logging, and bulletproof error handling for production systems.</p>
       </div>
-      <div class="controls">
-        <button class="chip" type="button" data-scroll="prev" aria-label="Previous">←</button>
-        <button class="chip" type="button" data-scroll="next" aria-label="Next">→</button>
+      <div class="card">
+        <div class="card-icon">C</div>
+        <h3>AWS Infrastructure</h3>
+        <p>IAM workflows, S3 deployments, EC2 routines, CloudFront distributions, and CloudWatch monitoring automation.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">D</div>
+        <h3>DevOps Tooling</h3>
+        <p>Bash scripting, Linux administration, SSH workflows, and system integration scripts that make infrastructure programmable.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">A</div>
+        <h3>Clean Architecture</h3>
+        <p>Reusable modules, config-driven systems, safe defaults, consistent repo structure, and maintainable code.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">S</div>
+        <h3>Security First</h3>
+        <p>Least-privilege IAM policies, encrypted secrets, audit logging, and security best practices baked into every script.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">O</div>
+        <h3>Observability</h3>
+        <p>Comprehensive logging, CloudWatch metrics, alert automation, and debugging workflows that surface issues fast.</p>
       </div>
     </div>
-
-    <div class="track" id="repoTrack" tabindex="0" aria-label="Featured repositories slider">
-
-      <article class="slide">
-        <div class="kicker">Python • AWS • IAM</div>
-        <h3>IAM automated users</h3>
-        <p>Automating IAM user workflows using boto3 (repeatable, auditable, safer than manual).</p>
-        <div class="links">
-          <a class="smallbtn primary" href="https://github.com/siv-the-programmer/aws_iam_automated_users.git" target="_blank" rel="noopener">Repo</a>
-          <a class="smallbtn" href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">Profile</a>
-        </div>
-      </article>
-
-      <article class="slide">
-        <div class="kicker">Python • Study • Fundamentals</div>
-        <h3>Python essentials 1</h3>
-        <p>Structured study notes and practice for Python fundamentals (clean progression + examples).</p>
-        <div class="links">
-          <a class="smallbtn primary" href="https://github.com/siv-the-programmer/Python_essentials1.git" target="_blank" rel="noopener">Repo</a>
-          <a class="smallbtn" href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">Profile</a>
-        </div>
-      </article>
-
-      <article class="slide">
-        <div class="kicker">CLI • GitHub • Automation</div>
-        <h3>CLI GitHub Menu Automation</h3>
-        <p>Menu-driven workflow for common GitHub tasks (reduce repetitive commands, keep flow fast).</p>
-        <div class="links">
-          <a class="smallbtn primary" href="https://github.com/siv-the-programmer/CLI_github_Menu_Automation.git" target="_blank" rel="noopener">Repo</a>
-          <a class="smallbtn" href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">Profile</a>
-        </div>
-      </article>
-
-      <article class="slide">
-        <div class="kicker">More</div>
-        <h3>Everything else</h3>
-        <p>All repos, experiments, notes, and ongoing builds live on my GitHub profile.</p>
-        <div class="links">
-          <a class="smallbtn primary" href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">Open GitHub</a>
-        </div>
-      </article>
-
-    </div>
-
-  </div>
-
-  <div class="grid" style="margin-top:18px;">
-    <div class="card">
-      <h3>Repo quality rules</h3>
-      <p>Readable README, clear setup, and scripts that fail safely with useful error messages.</p>
-    </div>
-    <div class="card">
-      <h3>Automation mindset</h3>
-      <p>If the workflow needs a checklist every time, it should become a command.</p>
-    </div>
-    <div class="card">
-      <h3>Cloud realism</h3>
-      <p>Least privilege, cost awareness, and clean structure over “it works once.”</p>
-    </div>
   </div>
 </section>
 
-<section class="section" id="stack">
-  <h2>Stack</h2>
-  <p class="lead">Tools I’m actively using across builds (Python is the center of gravity).</p>
+<!-- Projects -->
+<section id="projects">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Portfolio</span>
+      <h2>Featured Projects</h2>
+      <p class="subtitle">Production-ready automation scripts and tools. All code lives on GitHub with full documentation.</p>
+    </div>
 
-  <div class="grid">
-    <div class="card">
-      <h3>Python</h3>
-      <p>boto3, scripting, CLI tooling patterns, and disciplined error handling.</p>
-    </div>
-    <div class="card">
-      <h3>AWS</h3>
-      <p>IAM, S3, EC2, CloudFront, CloudWatch (fundamentals + automation).</p>
-    </div>
-    <div class="card">
-      <h3>Bash + Linux</h3>
-      <p>Shell workflows, SSH, and small scripts that glue systems together.</p>
-    </div>
-    <div class="card">
-      <h3>Web</h3>
-      <p>Static HTML/CSS sites with fast deploys and clean structure.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="now">
-  <h2>Now</h2>
-  <p class="lead">
-    Current focus: deepen AWS fundamentals and build a Python automation library that covers common tasks:
-    IAM workflows, S3 deploys, EC2 routines, and CloudWatch logging.
-  </p>
-
-  <div class="grid">
-    <div class="card">
-      <h3>Short-term</h3>
-      <p>More boto3 scripts + stronger logging conventions across repos.</p>
-    </div>
-    <div class="card">
-      <h3>Mid-term</h3>
-      <p>Reusable modules, config files, safer defaults, and better testing habits.</p>
-    </div>
-    <div class="card">
-      <h3>Long-term</h3>
-      <p>Ship projects that prove engineering habits: security, cost, reliability, clarity.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="contact">
-  <h2>Contact</h2>
-  <p class="lead">
-    Email is best. If you’re referencing a repo, paste the link and describe what you want reviewed or improved.
-  </p>
-
-  <div class="contact">
-    <div class="contact-row">
-      <div>
-        <div class="label">Email</div>
-        <b>sivariobuch@gmail.com</b>
+    <div class="slider">
+      <div class="project-card">
+        <span class="project-tag">Python • AWS • IAM</span>
+        <h3>IAM Automated Users</h3>
+        <p>Complete IAM user lifecycle automation using boto3. Repeatable, auditable, and safer than manual console work.</p>
+        <div class="project-links">
+          <a href="https://github.com/siv-the-programmer/aws_iam_automated_users.git" target="_blank" class="project-link link-primary">View Code</a>
+          <a href="https://github.com/siv-the-programmer" target="_blank" class="project-link link-secondary">Profile</a>
+        </div>
       </div>
 
-      <a class="btn primary"
-         href="mailto:sivariobuch@gmail.com?subject=Hello%20Siv&body=Hi%20Siv%2C%0A%0ARepo%20link%3A%0AContext%3A%0AWhat%20you%20want%20to%20achieve%3A%0AConstraints%20(time%2Fbudget)%3A%0A%0AThanks%2C">
-        Send email
-      </a>
+      <div class="project-card">
+        <span class="project-tag">Python • Study • Fundamentals</span>
+        <h3>Python Essentials 1</h3>
+        <p>Structured learning path for Python fundamentals with practical examples and real-world applications.</p>
+        <div class="project-links">
+          <a href="https://github.com/siv-the-programmer/Python_essentials1.git" target="_blank" class="project-link link-primary">View Code</a>
+          <a href="https://github.com/siv-the-programmer" target="_blank" class="project-link link-secondary">Profile</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-tag">CLI • GitHub • Automation</span>
+        <h3>CLI GitHub Menu</h3>
+        <p>Menu-driven automation for common GitHub workflows. Reduces repetitive commands and standardizes team workflows.</p>
+        <div class="project-links">
+          <a href="https://github.com/siv-the-programmer/CLI_github_Menu_Automation.git" target="_blank" class="project-link link-primary">View Code</a>
+          <a href="https://github.com/siv-the-programmer" target="_blank" class="project-link link-secondary">Profile</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <span class="project-tag">AWS • Infrastructure</span>
+        <h3>More Projects</h3>
+        <p>Additional automation scripts, cloud infrastructure tools, and experimental builds. Everything documented and production-ready.</p>
+        <div class="project-links">
+          <a href="https://github.com/siv-the-programmer" target="_blank" class="project-link link-primary">Explore GitHub</a>
+        </div>
+      </div>
     </div>
 
-    
+    <div class="grid" style="margin-top: 3rem;">
+      <div class="card">
+        <div class="card-icon">D</div>
+        <h3>Documentation</h3>
+        <p>Every repo includes a README with setup instructions, usage examples, and troubleshooting guides.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">R</div>
+        <h3>Production Ready</h3>
+        <p>Scripts fail safely with clear error messages. Logging and structure make debugging obvious.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">M</div>
+        <h3>Reusability</h3>
+        <p>Modular design, config files, and consistent patterns make code easy to adapt and extend.</p>
+      </div>
+    </div>
   </div>
 </section>
 
+<!-- Contact -->
+<section id="contact">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-tag">Get in Touch</span>
+      <h2>Let's Connect</h2>
+    </div>
+
+    <div class="contact-box">
+      <h3>Ready to collaborate?</h3>
+      <p>Email is best. Reference a repo or describe what you want to build. Include context, goals, and any time/budget constraints.</p>
+      
+      <a href="mailto:sivariobuch@gmail.com?subject=Hello%20Siv&body=Hi%20Siv%2C%0A%0ARepo%20link%3A%0AContext%3A%0AWhat%20you%20want%20to%20achieve%3A%0AConstraints%20(time%2Fbudget)%3A%0A%0AThanks%2C" class="btn btn-primary">Send Email</a>
+
+      <div class="social-links">
+        <a href="https://github.com/siv-the-programmer" target="_blank" class="social-link">GH</a>
+        <a href="https://www.linkedin.com/in/sivario-buchanan-546a40386" target="_blank" class="social-link">in</a>
+        <a href="https://www.instagram.com/sivbuchanan" target="_blank" class="social-link">IG</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
 <footer>
-  © <span id="y"></span> Sivario Buchanan
+  <div class="container">
+    <p>&copy; 2025 Sivario Buchanan • Python • Cloud • Automation</p>
+  </div>
 </footer>
 
-</div>
-
 <script>
-document.getElementById("y").textContent = new Date().getFullYear();
-
-(function(){
-  const track = document.getElementById("repoTrack");
-  const buttons = document.querySelectorAll("button[data-scroll]");
-
-  function scrollByCard(dir){
-    const firstSlide = track.querySelector(".slide");
-    const gap = 14;
-    const step = (firstSlide ? firstSlide.getBoundingClientRect().width : 280) + gap;
-    track.scrollBy({ left: dir * step, behavior: "smooth" });
-  }
-
-  buttons.forEach(btn => {
-    btn.addEventListener("click", () => {
-      const dir = btn.dataset.scroll === "next" ? 1 : -1;
-      scrollByCard(dir);
-    });
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    e.preventDefault();
+    const target = document.querySelector(this.getAttribute('href'));
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+    }
   });
-
-  track.addEventListener("keydown", (e) => {
-    if (e.key === "ArrowRight") scrollByCard(1);
-    if (e.key === "ArrowLeft") scrollByCard(-1);
-  });
-})();
+});
 </script>
+
 </body>
-  </html>
+</html>
