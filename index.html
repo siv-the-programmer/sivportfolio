@@ -29,7 +29,6 @@ body {
   overflow-x: hidden;
 }
 
-/* Animated Background */
 .bg-gradient {
   position: fixed;
   top: 0;
@@ -45,13 +44,15 @@ body {
   position: absolute;
   border-radius: 50%;
   filter: blur(100px);
+  -webkit-filter: blur(100px);
   animation: float 20s ease-in-out infinite;
+  -webkit-animation: float 20s ease-in-out infinite;
 }
 
 .orb1 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, var(--blue) 0%, transparent 70%);
+  background: radial-gradient(circle, #3b82f6 0%, rgba(59, 130, 246, 0) 70%);
   top: -150px;
   left: -150px;
 }
@@ -59,19 +60,21 @@ body {
 .orb2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+  background: radial-gradient(circle, #8b5cf6 0%, rgba(139, 92, 246, 0) 70%);
   top: 40%;
   right: -100px;
   animation-delay: 7s;
+  -webkit-animation-delay: 7s;
 }
 
 .orb3 {
   width: 350px;
   height: 350px;
-  background: radial-gradient(circle, var(--cyan) 0%, transparent 70%);
+  background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
   bottom: -50px;
   left: 30%;
   animation-delay: 14s;
+  -webkit-animation-delay: 14s;
 }
 
 @keyframes float {
@@ -79,7 +82,11 @@ body {
   50% { transform: translate(50px, -50px); }
 }
 
-/* Container */
+@-webkit-keyframes float {
+  0%, 100% { -webkit-transform: translate(0, 0); }
+  50% { -webkit-transform: translate(50px, -50px); }
+}
+
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -88,14 +95,12 @@ body {
   z-index: 1;
 }
 
-/* Navigation */
 nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  backdrop-filter: blur(20px);
-  background: rgba(10, 14, 23, 0.8);
+  background: rgba(10, 14, 23, 0.95);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   z-index: 100;
 }
@@ -112,9 +117,11 @@ nav {
 .logo {
   font-size: 1.5rem;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--blue), var(--purple));
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: #3b82f6;
 }
 
 nav ul {
@@ -127,14 +134,14 @@ nav a {
   color: var(--text-muted);
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s;
+  transition: color 0.3s ease;
+  -webkit-transition: color 0.3s ease;
 }
 
 nav a:hover {
   color: var(--text);
 }
 
-/* Hero */
 .hero {
   min-height: 100vh;
   display: flex;
@@ -147,9 +154,11 @@ nav a:hover {
   font-weight: 900;
   line-height: 1.1;
   margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #fff, var(--blue), var(--purple));
+  background: linear-gradient(135deg, #ffffff 0%, #3b82f6 50%, #8b5cf6 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: #ffffff;
   letter-spacing: -2px;
 }
 
@@ -181,9 +190,15 @@ nav a:hover {
   background: var(--blue);
   border-radius: 50%;
   animation: pulse 2s infinite;
+  -webkit-animation: pulse 2s infinite;
 }
 
 @keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+@-webkit-keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.5; }
 }
@@ -201,11 +216,13 @@ nav a:hover {
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   font-weight: 600;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
 }
 
 .tag:hover {
   transform: translateY(-3px);
+  -webkit-transform: translateY(-3px);
   border-color: var(--blue);
   box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
 }
@@ -222,18 +239,20 @@ nav a:hover {
   border-radius: 12px;
   font-weight: 600;
   text-decoration: none;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
   display: inline-block;
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, var(--blue), var(--purple));
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
   color: white;
   box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
 }
 
 .btn-primary:hover {
   transform: translateY(-3px);
+  -webkit-transform: translateY(-3px);
   box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
 }
 
@@ -246,9 +265,9 @@ nav a:hover {
 .btn-secondary:hover {
   background: rgba(255, 255, 255, 0.1);
   transform: translateY(-3px);
+  -webkit-transform: translateY(-3px);
 }
 
-/* Sections */
 section {
   padding: 6rem 0;
 }
@@ -284,7 +303,6 @@ h2 {
   margin: 0 auto;
 }
 
-/* Grid */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -293,11 +311,11 @@ h2 {
 
 .card {
   background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 20px;
   padding: 2.5rem;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
 }
@@ -309,17 +327,21 @@ h2 {
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, var(--blue), var(--purple));
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
   transform: scaleX(0);
-  transition: transform 0.3s;
+  -webkit-transform: scaleX(0);
+  transition: transform 0.3s ease;
+  -webkit-transition: -webkit-transform 0.3s ease;
 }
 
 .card:hover::before {
   transform: scaleX(1);
+  -webkit-transform: scaleX(1);
 }
 
 .card:hover {
   transform: translateY(-10px);
+  -webkit-transform: translateY(-10px);
   border-color: rgba(59, 130, 246, 0.3);
   box-shadow: 0 20px 50px rgba(59, 130, 246, 0.2);
 }
@@ -327,7 +349,7 @@ h2 {
 .card-icon {
   width: 60px;
   height: 60px;
-  background: linear-gradient(135deg, var(--blue), var(--purple));
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
   border-radius: 15px;
   display: flex;
   align-items: center;
@@ -348,9 +370,8 @@ h2 {
   line-height: 1.7;
 }
 
-/* Stats */
 .stats {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(139, 92, 246, 0.1));
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
   border-radius: 30px;
   padding: 3rem;
   margin: 3rem 0;
@@ -367,9 +388,11 @@ h2 {
 .stat h4 {
   font-size: 2.5rem;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--blue), var(--purple));
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  color: #3b82f6;
   margin-bottom: 0.5rem;
 }
 
@@ -377,7 +400,6 @@ h2 {
   color: var(--text-muted);
 }
 
-/* Projects Slider */
 .slider {
   overflow-x: auto;
   display: flex;
@@ -396,23 +418,24 @@ h2 {
 }
 
 .slider::-webkit-scrollbar-thumb {
-  background: linear-gradient(90deg, var(--blue), var(--purple));
+  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 100%);
   border-radius: 10px;
 }
 
 .project-card {
   min-width: 380px;
   background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 20px;
   padding: 2rem;
   scroll-snap-align: start;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
 }
 
 .project-card:hover {
   transform: scale(1.05);
+  -webkit-transform: scale(1.05);
   border-color: rgba(59, 130, 246, 0.3);
   box-shadow: 0 20px 50px rgba(59, 130, 246, 0.3);
 }
@@ -450,16 +473,18 @@ h2 {
   text-decoration: none;
   font-weight: 600;
   font-size: 0.9rem;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
 }
 
 .link-primary {
-  background: linear-gradient(135deg, var(--blue), var(--purple));
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
   color: white;
 }
 
 .link-primary:hover {
   transform: translateY(-2px);
+  -webkit-transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
 }
 
@@ -473,12 +498,10 @@ h2 {
   background: rgba(255, 255, 255, 0.1);
 }
 
-/* Contact */
 .contact-box {
   max-width: 600px;
   margin: 3rem auto;
   background: rgba(17, 24, 39, 0.7);
-  backdrop-filter: blur(20px);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 30px;
   padding: 3rem;
@@ -514,16 +537,17 @@ h2 {
   text-decoration: none;
   color: var(--text);
   font-weight: 700;
-  transition: all 0.3s;
+  transition: all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
 }
 
 .social-link:hover {
-  background: linear-gradient(135deg, var(--blue), var(--purple));
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
   transform: translateY(-5px);
+  -webkit-transform: translateY(-5px);
   box-shadow: 0 10px 25px rgba(59, 130, 246, 0.4);
 }
 
-/* Footer */
 footer {
   text-align: center;
   padding: 3rem 0;
@@ -531,7 +555,6 @@ footer {
   border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Mobile */
 @media (max-width: 768px) {
   nav ul {
     gap: 1rem;
@@ -561,14 +584,12 @@ footer {
 </head>
 <body>
 
-<!-- Background -->
 <div class="bg-gradient">
   <div class="orb orb1"></div>
   <div class="orb orb2"></div>
   <div class="orb orb3"></div>
 </div>
 
-<!-- Navigation -->
 <nav>
   <div class="nav-content">
     <div class="logo">SIV</div>
@@ -581,7 +602,6 @@ footer {
   </div>
 </nav>
 
-<!-- Hero -->
 <section class="hero">
   <div class="container">
     <div class="status">
@@ -603,14 +623,13 @@ footer {
     </div>
 
     <div class="buttons">
-      <a href="https://github.com/siv-the-programmer" target="_blank" class="btn btn-primary">View GitHub</a>
+      <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="btn btn-primary">View GitHub</a>
       <a href="#projects" class="btn btn-secondary">Explore Projects</a>
       <a href="mailto:sivariobuch@gmail.com" class="btn btn-secondary">Get in Touch</a>
     </div>
   </div>
 </section>
 
-<!-- About -->
 <section id="about">
   <div class="container">
     <div class="section-header">
@@ -660,7 +679,6 @@ footer {
   </div>
 </section>
 
-<!-- Skills -->
 <section id="skills">
   <div class="container">
     <div class="section-header">
@@ -704,7 +722,6 @@ footer {
   </div>
 </section>
 
-<!-- Projects -->
 <section id="projects">
   <div class="container">
     <div class="section-header">
@@ -719,8 +736,8 @@ footer {
         <h3>IAM Automated Users</h3>
         <p>Complete IAM user lifecycle automation using boto3. Repeatable, auditable, and safer than manual console work.</p>
         <div class="project-links">
-          <a href="https://github.com/siv-the-programmer/aws_iam_automated_users.git" target="_blank" class="project-link link-primary">View Code</a>
-          <a href="https://github.com/siv-the-programmer" target="_blank" class="project-link link-secondary">Profile</a>
+          <a href="https://github.com/siv-the-programmer/aws_iam_automated_users.git" target="_blank" rel="noopener" class="project-link link-primary">View Code</a>
+          <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="project-link link-secondary">Profile</a>
         </div>
       </div>
 
@@ -729,8 +746,8 @@ footer {
         <h3>Python Essentials 1</h3>
         <p>Structured learning path for Python fundamentals with practical examples and real-world applications.</p>
         <div class="project-links">
-          <a href="https://github.com/siv-the-programmer/Python_essentials1.git" target="_blank" class="project-link link-primary">View Code</a>
-          <a href="https://github.com/siv-the-programmer" target="_blank" class="project-link link-secondary">Profile</a>
+          <a href="https://github.com/siv-the-programmer/Python_essentials1.git" target="_blank" rel="noopener" class="project-link link-primary">View Code</a>
+          <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="project-link link-secondary">Profile</a>
         </div>
       </div>
 
@@ -739,8 +756,8 @@ footer {
         <h3>CLI GitHub Menu</h3>
         <p>Menu-driven automation for common GitHub workflows. Reduces repetitive commands and standardizes team workflows.</p>
         <div class="project-links">
-          <a href="https://github.com/siv-the-programmer/CLI_github_Menu_Automation.git" target="_blank" class="project-link link-primary">View Code</a>
-          <a href="https://github.com/siv-the-programmer" target="_blank" class="project-link link-secondary">Profile</a>
+          <a href="https://github.com/siv-the-programmer/CLI_github_Menu_Automation.git" target="_blank" rel="noopener" class="project-link link-primary">View Code</a>
+          <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="project-link link-secondary">Profile</a>
         </div>
       </div>
 
@@ -749,7 +766,7 @@ footer {
         <h3>More Projects</h3>
         <p>Additional automation scripts, cloud infrastructure tools, and experimental builds. Everything documented and production-ready.</p>
         <div class="project-links">
-          <a href="https://github.com/siv-the-programmer" target="_blank" class="project-link link-primary">Explore GitHub</a>
+          <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="project-link link-primary">Explore GitHub</a>
         </div>
       </div>
     </div>
@@ -774,7 +791,6 @@ footer {
   </div>
 </section>
 
-<!-- Contact -->
 <section id="contact">
   <div class="container">
     <div class="section-header">
@@ -786,18 +802,17 @@ footer {
       <h3>Ready to collaborate?</h3>
       <p>Email is best. Reference a repo or describe what you want to build. Include context, goals, and any time/budget constraints.</p>
       
-      <a href="mailto:sivariobuch@gmail.com?subject=Hello%20Siv&body=Hi%20Siv%2C%0A%0ARepo%20link%3A%0AContext%3A%0AWhat%20you%20want%20to%20achieve%3A%0AConstraints%20(time%2Fbudget)%3A%0A%0AThanks%2C" class="btn btn-primary">Send Email</a>
+      <a href="mailto:sivariobuch@gmail.com?subject=Hello%20Siv&amp;body=Hi%20Siv%2C%0A%0ARepo%20link%3A%0AContext%3A%0AWhat%20you%20want%20to%20achieve%3A%0AConstraints%20(time%2Fbudget)%3A%0A%0AThanks%2C" class="btn btn-primary">Send Email</a>
 
       <div class="social-links">
-        <a href="https://github.com/siv-the-programmer" target="_blank" class="social-link">GH</a>
-        <a href="https://www.linkedin.com/in/sivario-buchanan-546a40386" target="_blank" class="social-link">in</a>
-        <a href="https://www.instagram.com/sivbuchanan" target="_blank" class="social-link">IG</a>
+        <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="social-link">GH</a>
+        <a href="https://www.linkedin.com/in/sivario-buchanan-546a40386" target="_blank" rel="noopener" class="social-link">in</a>
+        <a href="https://www.instagram.com/sivbuchanan" target="_blank" rel="noopener" class="social-link">IG</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- Footer -->
 <footer>
   <div class="container">
     <p>&copy; 2025 Sivario Buchanan • Python • Cloud • Automation</p>
@@ -805,11 +820,10 @@ footer {
 </footer>
 
 <script>
-// Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
   anchor.addEventListener('click', function (e) {
     e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
+    var target = document.querySelector(this.getAttribute('href'));
     if (target) {
       target.scrollIntoView({ behavior: 'smooth' });
     }
