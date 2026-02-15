@@ -1477,7 +1477,7 @@ const statsObserver = new IntersectionObserver((entries) => {
       statsObserver.unobserve(entry.target);
     }
   });
-}, { threshold: 0.5 });
+}, { threshold: 0.8 });
 statsObserver.observe(document.querySelector('.stats'));
 </script>
 </body>
