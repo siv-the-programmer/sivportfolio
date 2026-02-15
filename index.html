@@ -808,6 +808,7 @@ h2 {
   background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   opacity: 0;
   transition: opacity 0.5s ease;
@@ -1098,7 +1099,7 @@ footer::before {
       <div class="buttons">
         <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="btn btn-primary">View GitHub</a>
         <a href="#projects" class="btn btn-secondary">Explore Projects</a>
-        <a href="mailto:sivariobuch@gmail.com" class="btn btn-secondary">Get in Touch</a>
+        <a href="/cdn-cgi/l/email-protection#4d3e243b2c3f24222f382e250d2a202c2421632e2220" class="btn btn-secondary">Get in Touch</a>
       </div>
     </div>
   </div>
@@ -1140,12 +1141,12 @@ footer::before {
         <p>Scripts over click-steps, least-privilege over "admin everywhere," and clear documentation that makes fixes obvious.</p>
       </div>
       <div class="card animate-on-scroll">
-        <div class="card-icon">!</div>
+        <div class="card-icon">/</div>
         <h3>Approach</h3>
         <p>If it needs a checklist every time, it should become a command. Repeatability is king.</p>
       </div>
       <div class="card animate-on-scroll">
-        <div class="card-icon">/</div>
+        <div class="card-icon">!</div>
         <h3>Mindset</h3>
         <p>Security + cost awareness + clarity. Clean structure over "it works once."</p>
       </div>
@@ -1158,7 +1159,7 @@ footer::before {
     <div class="section-header animate-on-scroll">
       <span class="section-tag">Core Skills</span>
       <h2>Tech Arsenal</h2>
-      <p class="subtitle">Python-first automation with AWS fundamentals and disciplined engineering practices.</p>
+      <p class="subtitle">Python & Bash-first automation with AWS fundamentals and disciplined engineering practices.</p>
     </div>
 
     <div class="grid">
@@ -1294,7 +1295,7 @@ footer::before {
       <h3>Ready to collaborate?</h3>
       <p>Email is best. Reference a repo or describe what you want to build. Include context, goals, and any time/budget constraints.</p>
       
-      <a href="mailto:sivariobuch@gmail.com?subject=Hello%20Siv&amp;body=Hi%20Siv%2C%0A%0ARepo%20link%3A%0AContext%3A%0AWhat%20you%20want%20to%20achieve%3A%0AConstraints%20(time%2Fbudget)%3A%0A%0AThanks%2C" class="btn btn-primary">Send Email</a>
+      <a href="/cdn-cgi/l/email-protection#91e2f8e7f0e3f8fef3e4f2f9d1f6fcf0f8fdbff2fefcaee2e4f3fbf4f2e5acd9f4fdfdfeb4a3a1c2f8e7b7f0fce1aaf3fef5e8acd9f8b4a3a1c2f8e7b4a3d2b4a1d0b4a1d0c3f4e1feb4a3a1fdf8fffab4a2d0b4a1d0d2feffe5f4e9e5b4a2d0b4a1d0c6f9f0e5b4a3a1e8fee4b4a3a1e6f0ffe5b4a3a1e5feb4a3a1f0f2f9f8f4e7f4b4a2d0b4a1d0d2feffe2e5e3f0f8ffe5e2b4a3a1b9e5f8fcf4b4a3d7f3e4f5f6f4e5b8b4a2d0b4a1d0b4a1d0c5f9f0fffae2b4a3d2" class="btn btn-primary">Send Email</a>
 
       <div class="social-links">
         <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="social-link" title="GitHub">GH</a>
@@ -1313,7 +1314,7 @@ footer::before {
 
 <div class="scroll-to-top" id="scrollToTop">↑</div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
   anchor.addEventListener('click', function (e) {
@@ -1477,14 +1478,7 @@ const statsObserver = new IntersectionObserver((entries) => {
     }
   });
 }, { threshold: 0.5 });
-
-const statsSection = document.querySelector('.stats');
-if (statsSection) {
-  statsObserver.observe(statsSection);
-}
-
-console.log('%c Portfolio Loaded Successfully! ', 'background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); color: white; padding: 10px 20px; font-size: 16px; font-weight: bold;');
+statsObserver.observe(document.querySelector('.stats'));
 </script>
-
 </body>
-</html>
+</html> 
