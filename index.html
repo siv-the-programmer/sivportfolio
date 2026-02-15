@@ -1,1484 +1,467 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sivario Buchanan | Python Cloud Engineer</title>
-<style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-:root {
-  --bg: #0a0e17;
-  --card-bg: #111827;
-  --text: #f9fafb;
-  --text-muted: #9ca3af;
-  --blue: #3b82f6;
-  --purple: #8b5cf6;
-  --cyan: #06b6d4;
-  --green: #10b981;
-  --orange: #f59e0b;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-  overflow-x: hidden;
-}
-
-/* Animated mesh gradient background */
-.bg-gradient {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-  opacity: 0.4;
-  pointer-events: none;
-}
-
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  filter: blur(120px);
-  animation: float 25s ease-in-out infinite;
-}
-
-.orb1 {
-  width: 600px;
-  height: 600px;
-  background: radial-gradient(circle, #3b82f6 0%, rgba(59, 130, 246, 0) 70%);
-  top: -200px;
-  left: -200px;
-  animation-delay: 0s;
-}
-
-.orb2 {
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, #8b5cf6 0%, rgba(139, 92, 246, 0) 70%);
-  top: 50%;
-  right: -150px;
-  animation-delay: 8s;
-}
-
-.orb3 {
-  width: 450px;
-  height: 450px;
-  background: radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0) 70%);
-  bottom: -100px;
-  left: 25%;
-  animation-delay: 16s;
-}
-
-.orb4 {
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, #10b981 0%, rgba(16, 185, 129, 0) 70%);
-  top: 30%;
-  left: 50%;
-  animation-delay: 12s;
-}
-
-@keyframes float {
-  0%, 100% { 
-    transform: translate(0, 0) scale(1); 
-    opacity: 0.4;
-  }
-  25% { 
-    transform: translate(80px, -80px) scale(1.1); 
-    opacity: 0.5;
-  }
-  50% { 
-    transform: translate(40px, 60px) scale(0.9); 
-    opacity: 0.3;
-  }
-  75% { 
-    transform: translate(-60px, 40px) scale(1.05); 
-    opacity: 0.45;
-  }
-}
-
-/* Cursor trail effect */
-.cursor-trail {
-  position: fixed;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.6), transparent);
-  pointer-events: none;
-  z-index: 9999;
-  animation: cursorFade 0.8s ease-out forwards;
-}
-
-@keyframes cursorFade {
-  to {
-    opacity: 0;
-    transform: scale(2);
-  }
-}
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
-  position: relative;
-  z-index: 1;
-}
-
-/* Enhanced Navigation */
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background: rgba(10, 14, 23, 0.8);
-  backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  z-index: 100;
-  transition: all 0.3s ease;
-}
-
-nav.scrolled {
-  background: rgba(10, 14, 23, 0.95);
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
-}
-
-.nav-content {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.logo {
-  font-size: 1.5rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  position: relative;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.logo:hover {
-  transform: scale(1.05);
-}
-
-nav ul {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-
-nav a {
-  color: var(--text-muted);
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.3s ease;
-  position: relative;
-}
-
-nav a::after {
-  content: '';
-  position: absolute;
-  bottom: -5px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(90deg, #3b82f6, #8b5cf6);
-  transition: width 0.3s ease;
-}
-
-nav a:hover::after,
-nav a.active::after {
-  width: 100%;
-}
-
-nav a:hover,
-nav a.active {
-  color: var(--text);
-}
-
-/* Hero Section */
-.hero {
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  padding-top: 100px;
-  position: relative;
-}
-
-.hero-content {
-  animation: fadeInUp 0.8s ease-out;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.hero h1 {
-  font-size: clamp(3rem, 7vw, 6rem);
-  font-weight: 900;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, #ffffff 0%, #3b82f6 50%, #8b5cf6 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: -3px;
-  animation: gradientShift 8s ease infinite;
-  background-size: 200% 200%;
-}
-
-@keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-}
-
-.hero p {
-  font-size: 1.4rem;
-  color: var(--text-muted);
-  margin-bottom: 2rem;
-  max-width: 700px;
-  line-height: 1.8;
-  animation: fadeInUp 0.8s ease-out 0.2s backwards;
-}
-
-.status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1.4rem;
-  background: rgba(59, 130, 246, 0.15);
-  border: 1px solid rgba(59, 130, 246, 0.4);
-  border-radius: 50px;
-  color: var(--blue);
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: 2rem;
-  animation: fadeInUp 0.8s ease-out 0.1s backwards;
-  transition: all 0.3s ease;
-}
-
-.status:hover {
-  background: rgba(59, 130, 246, 0.25);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-}
-
-.pulse {
-  width: 8px;
-  height: 8px;
-  background: var(--blue);
-  border-radius: 50%;
-  animation: pulse 2s infinite;
-  box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-}
-
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-  }
-  50% {
-    box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0);
-  }
-}
-
-.tech-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
-  margin: 2rem 0;
-  animation: fadeInUp 0.8s ease-out 0.3s backwards;
-}
-
-.tag {
-  padding: 0.8rem 1.5rem;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  cursor: pointer;
-  position: relative;
-  overflow: hidden;
-}
-
-.tag::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
-  transition: left 0.5s ease;
-}
-
-.tag:hover::before {
-  left: 100%;
-}
-
-.tag:hover {
-  transform: translateY(-5px) scale(1.05);
-  border-color: var(--blue);
-  background: rgba(59, 130, 246, 0.1);
-  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-}
-
-.buttons {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-  animation: fadeInUp 0.8s ease-out 0.4s backwards;
-}
-
-.btn {
-  padding: 1.1rem 2.2rem;
-  border-radius: 14px;
-  font-weight: 600;
-  font-size: 1rem;
-  text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  display: inline-block;
-  position: relative;
-  overflow: hidden;
-}
-
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  transform: translate(-50%, -50%);
-  transition: width 0.6s ease, height 0.6s ease;
-}
-
-.btn:hover::before {
-  width: 300px;
-  height: 300px;
-}
-
-.btn-primary {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  color: white;
-  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
-  position: relative;
-  z-index: 1;
-}
-
-.btn-primary:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 50px rgba(59, 130, 246, 0.5);
-}
-
-.btn-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.btn-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  transform: translateY(-4px);
-  border-color: rgba(59, 130, 246, 0.5);
-}
-
-/* Sections */
-section {
-  padding: 8rem 0;
-  position: relative;
-}
-
-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 1px;
-  height: 100px;
-  background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.3), transparent);
-}
-
-.section-header {
-  text-align: center;
-  margin-bottom: 5rem;
-  animation: fadeInUp 0.8s ease-out;
-}
-
-.section-tag {
-  display: inline-block;
-  padding: 0.6rem 1.8rem;
-  background: rgba(139, 92, 246, 0.15);
-  border: 1px solid rgba(139, 92, 246, 0.4);
-  border-radius: 50px;
-  color: var(--purple);
-  font-size: 0.95rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-  transition: all 0.3s ease;
-}
-
-.section-tag:hover {
-  background: rgba(139, 92, 246, 0.25);
-  transform: translateY(-2px);
-}
-
-h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 900;
-  margin-bottom: 1.5rem;
-  letter-spacing: -2px;
-  background: linear-gradient(135deg, var(--text) 0%, var(--blue) 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.subtitle {
-  font-size: 1.3rem;
-  color: var(--text-muted);
-  max-width: 700px;
-  margin: 0 auto;
-  line-height: 1.8;
-}
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-}
-
-.card {
-  background: rgba(17, 24, 39, 0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
-  padding: 2.5rem;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-}
-
-.card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 4px;
-  background: linear-gradient(90deg, #3b82f6 0%, #8b5cf6 50%, #06b6d4 100%);
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s ease;
-}
-
-.card::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.1) 0%, transparent 70%);
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-.card:hover::before {
-  transform: scaleX(1);
-}
-
-.card:hover::after {
-  opacity: 1;
-}
-
-.card:hover {
-  transform: translateY(-12px) scale(1.02);
-  border-color: rgba(59, 130, 246, 0.4);
-  box-shadow: 0 25px 60px rgba(59, 130, 246, 0.25);
-  background: rgba(17, 24, 39, 0.8);
-}
-
-.card-icon {
-  width: 70px;
-  height: 70px;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  border-radius: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 1.8rem;
-  font-weight: 900;
-  margin-bottom: 1.5rem;
-  color: white;
-  transition: all 0.4s ease;
-  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-}
-
-.card:hover .card-icon {
-  transform: rotateY(180deg) scale(1.1);
-  box-shadow: 0 15px 40px rgba(59, 130, 246, 0.5);
-}
-
-.card h3 {
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-  transition: color 0.3s ease;
-}
-
-.card:hover h3 {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.card p {
-  color: var(--text-muted);
-  line-height: 1.8;
-  transition: color 0.3s ease;
-}
-
-.card:hover p {
-  color: var(--text);
-}
-
-/* Stats Section */
-.stats {
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
-  border-radius: 30px;
-  padding: 4rem;
-  margin: 4rem 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.stats::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-  animation: shimmer 3s infinite;
-}
-
-@keyframes shimmer {
-  to { left: 100%; }
-}
-
-.stats-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 3rem;
-  text-align: center;
-  position: relative;
-  z-index: 1;
-}
-
-.stat {
-  transition: transform 0.3s ease;
-  cursor: pointer;
-}
-
-.stat:hover {
-  transform: translateY(-10px);
-}
-
-.stat h4 {
-  font-size: 3rem;
-  font-weight: 900;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  margin-bottom: 0.5rem;
-  transition: transform 0.3s ease;
-}
-
-.stat:hover h4 {
-  transform: scale(1.1);
-}
-
-.stat p {
-  color: var(--text-muted);
-  font-weight: 600;
-  font-size: 1.1rem;
-}
-
-/* Enhanced Projects Section */
-.projects-container {
-  position: relative;
-  padding: 2rem 0;
-}
-
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-  gap: 2.5rem;
-  margin-bottom: 3rem;
-}
-
-.project-card {
-  background: rgba(17, 24, 39, 0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
-  padding: 0;
-  transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
-  cursor: pointer;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.project-header {
-  padding: 2rem;
-  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(139, 92, 246, 0.1) 100%);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  position: relative;
-  overflow: hidden;
-}
-
-.project-header::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-  transition: left 0.6s ease;
-}
-
-.project-card:hover .project-header::before {
-  left: 100%;
-}
-
-.project-tag {
-  display: inline-block;
-  padding: 0.5rem 1.2rem;
-  background: rgba(6, 182, 212, 0.15);
-  border: 1px solid rgba(6, 182, 212, 0.4);
-  border-radius: 50px;
-  color: var(--cyan);
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-  transition: all 0.3s ease;
-}
-
-.project-card:hover .project-tag {
-  background: rgba(6, 182, 212, 0.25);
-  transform: translateY(-2px);
-}
-
-.project-body {
-  padding: 2rem;
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.project-card h3 {
-  font-size: 1.6rem;
-  margin-bottom: 1rem;
-  color: var(--text);
-  transition: all 0.3s ease;
-  line-height: 1.3;
-}
-
-.project-card:hover h3 {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.project-card p {
-  color: var(--text-muted);
-  margin-bottom: 1.5rem;
-  line-height: 1.7;
-  flex-grow: 1;
-}
-
-.project-links {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: auto;
-}
-
-.project-link {
-  padding: 0.8rem 1.6rem;
-  border-radius: 12px;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 0.95rem;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
-}
-
-.project-link::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.1);
-  transform: translate(-50%, -50%);
-  transition: width 0.5s ease, height 0.5s ease;
-}
-
-.project-link:hover::before {
-  width: 200px;
-  height: 200px;
-}
-
-.link-primary {
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  color: white;
-  box-shadow: 0 5px 20px rgba(59, 130, 246, 0.3);
-}
-
-.link-primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.5);
-}
-
-.link-secondary {
-  background: rgba(255, 255, 255, 0.05);
-  color: var(--text);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.link-secondary:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(59, 130, 246, 0.5);
-  transform: translateY(-3px);
-}
-
-.project-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 24px;
-  padding: 2px;
-  background: linear-gradient(135deg, #3b82f6, #8b5cf6, #06b6d4);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.5s ease;
-}
-
-.project-card:hover::before {
-  opacity: 1;
-}
-
-.project-card:hover {
-  transform: translateY(-10px);
-  box-shadow: 0 30px 70px rgba(59, 130, 246, 0.3);
-}
-
-/* Project Features Grid */
-.project-features {
-  grid-column: 1 / -1;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
-}
-
-/* Contact Section */
-.contact-box {
-  max-width: 700px;
-  margin: 3rem auto;
-  background: rgba(17, 24, 39, 0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 30px;
-  padding: 4rem;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-}
-
-.contact-box::before {
-  content: '';
-  position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: conic-gradient(from 0deg, transparent, rgba(59, 130, 246, 0.1), transparent 30%);
-  animation: rotate 6s linear infinite;
-}
-
-@keyframes rotate {
-  to { transform: rotate(360deg); }
-}
-
-.contact-box > * {
-  position: relative;
-  z-index: 1;
-}
-
-.contact-box h3 {
-  font-size: 2.2rem;
-  margin-bottom: 1rem;
-  background: linear-gradient(135deg, var(--text) 0%, var(--blue) 100%);
-  background-clip: text;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.contact-box p {
-  color: var(--text-muted);
-  margin-bottom: 2.5rem;
-  font-size: 1.1rem;
-  line-height: 1.8;
-}
-
-.social-links {
-  display: flex;
-  gap: 1.5rem;
-  justify-content: center;
-  margin-top: 2.5rem;
-}
-
-.social-link {
-  width: 60px;
-  height: 60px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: var(--text);
-  font-weight: 700;
-  font-size: 1.2rem;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  position: relative;
-  overflow: hidden;
-}
-
-.social-link::before {
-  content: '';
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 0;
-  height: 0;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  transform: translate(-50%, -50%);
-  transition: width 0.5s ease, height 0.5s ease;
-  z-index: -1;
-}
-
-.social-link:hover::before {
-  width: 100px;
-  height: 100px;
-}
-
-.social-link:hover {
-  transform: translateY(-8px) scale(1.1);
-  box-shadow: 0 15px 40px rgba(59, 130, 246, 0.4);
-  border-color: transparent;
-  color: white;
-}
-
-/* Footer */
-footer {
-  text-align: center;
-  padding: 4rem 0;
-  color: var(--text-muted);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-  position: relative;
-}
-
-footer::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--blue), transparent);
-}
-
-/* Scroll to top button */
-.scroll-to-top {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  width: 50px;
-  height: 50px;
-  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  font-size: 1.5rem;
-  cursor: pointer;
-  opacity: 0;
-  transform: translateY(100px);
-  transition: all 0.4s ease;
-  z-index: 999;
-  box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
-}
-
-.scroll-to-top.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.scroll-to-top:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(59, 130, 246, 0.6);
-}
-
-/* Responsive Design */
-@media (max-width: 968px) {
-  .projects-grid {
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  }
-}
-
-@media (max-width: 768px) {
-  nav ul {
-    gap: 1rem;
-    font-size: 0.9rem;
-  }
-  
-  .hero {
-    padding-top: 120px;
-  }
-  
-  section {
-    padding: 5rem 0;
-  }
-  
-  .grid, .projects-grid {
-    grid-template-columns: 1fr;
-  }
-  
-  .stats {
-    padding: 2.5rem;
-  }
-  
-  .contact-box {
-    padding: 2.5rem;
-  }
-
-  .social-links {
-    flex-wrap: wrap;
-  }
-
-  h1 {
-    letter-spacing: -2px !important;
-  }
-
-  h2 {
-    letter-spacing: -1px !important;
-  }
-}
-
-/* Loading animation */
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-.fade-in {
-  animation: fadeIn 0.6s ease-out;
-}
-
-/* Intersection Observer animations */
-.animate-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease-out;
-}
-
-.animate-on-scroll.animated {
-  opacity: 1;
-  transform: translateY(0);
-}
-</style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sivario Buchanan | Python Cloud Engineer</title>
+  <meta name="description" content="Python Cloud Engineer building production-grade AWS automation with boto3. IAM, S3, EC2, CloudWatch." />
+
+  <style>
+    :root{
+      --bg:#0a0e17;
+      --panel:#0f172a;
+      --card:#111827;
+      --text:#f9fafb;
+      --muted:#9ca3af;
+      --line:rgba(255,255,255,.08);
+      --blue:#3b82f6;
+      --purple:#8b5cf6;
+      --radius:18px;
+      --max:1100px;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+      background: radial-gradient(900px 600px at 10% 10%, rgba(59,130,246,.18), transparent 55%),
+                  radial-gradient(900px 600px at 90% 20%, rgba(139,92,246,.16), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      line-height:1.6;
+    }
+    a{color:inherit}
+    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
+    .muted{color:var(--muted)}
+
+    /* Nav */
+    nav{
+      position:sticky; top:0; z-index:50;
+      background:rgba(10,14,23,.92);
+      border-bottom:1px solid var(--line);
+    }
+    .nav-content{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:16px 0;
+    }
+    .logo{
+      font-weight:900; letter-spacing:.08em;
+      background:linear-gradient(135deg,var(--blue),var(--purple));
+      -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color:transparent;
+      text-decoration:none;
+    }
+    nav ul{list-style:none; display:flex; gap:18px; align-items:center}
+    nav a{
+      text-decoration:none;
+      color:var(--muted);
+      font-weight:600;
+      padding:8px 10px;
+      border-radius:12px;
+      transition:background .15s ease, color .15s ease;
+    }
+    nav a:hover{color:var(--text); background:rgba(255,255,255,.06)}
+    nav a.active{color:var(--text); background:rgba(59,130,246,.16)}
+
+    /* Sections */
+    section{padding:70px 0}
+    .section-head{margin-bottom:26px}
+    .badge{
+      display:inline-block;
+      padding:7px 12px;
+      border-radius:999px;
+      border:1px solid rgba(59,130,246,.35);
+      background:rgba(59,130,246,.12);
+      color:var(--blue);
+      font-weight:700;
+      font-size:13px;
+      margin-bottom:14px;
+    }
+    h1{
+      font-size:clamp(34px,6vw,56px);
+      line-height:1.1;
+      letter-spacing:-.03em;
+      margin-bottom:14px;
+    }
+    h2{
+      font-size:clamp(26px,4.5vw,40px);
+      line-height:1.15;
+      letter-spacing:-.02em;
+      margin-bottom:10px;
+    }
+
+    /* Hero */
+    .hero{padding-top:44px}
+    .hero p{max-width:760px; font-size:18px}
+    .pill-row{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0 22px}
+    .pill{
+      padding:8px 12px;
+      border:1px solid var(--line);
+      border-radius:999px;
+      background:rgba(255,255,255,.04);
+      color:var(--muted);
+      font-weight:700;
+      font-size:13px;
+    }
+
+    /* Buttons */
+    .btn-row{display:flex; gap:12px; flex-wrap:wrap; margin-top:18px}
+    .btn{
+      display:inline-block;
+      padding:12px 16px;
+      border-radius:14px;
+      font-weight:800;
+      text-decoration:none;
+      border:1px solid var(--line);
+      transition:transform .12s ease, background .12s ease, border-color .12s ease;
+    }
+    .btn:hover{transform:translateY(-1px)}
+    .btn.primary{
+      border-color:rgba(59,130,246,.55);
+      background:linear-gradient(135deg, rgba(59,130,246,.95), rgba(139,92,246,.95));
+      color:white;
+    }
+    .btn.secondary{background:rgba(255,255,255,.04); color:var(--text)}
+    .btn.secondary:hover{background:rgba(255,255,255,.07); border-color:rgba(59,130,246,.35)}
+
+    /* Grid Cards */
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(12, 1fr);
+      gap:16px;
+    }
+    .card{
+      grid-column:span 4;
+      background:rgba(17,24,39,.72);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:18px;
+    }
+    .card h3{font-size:18px; margin-bottom:8px}
+    .card p{color:var(--muted)}
+    .card .tagline{font-weight:800; color:var(--text); opacity:.92}
+
+    /* Projects */
+    .project{grid-column:span 6}
+    .project .meta{
+      display:inline-block;
+      margin-bottom:10px;
+      font-size:12px;
+      font-weight:800;
+      color:rgba(6,182,212,.95);
+      background:rgba(6,182,212,.12);
+      border:1px solid rgba(6,182,212,.28);
+      padding:6px 10px;
+      border-radius:999px;
+    }
+    .links{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .link{
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      text-decoration:none;
+      font-weight:800;
+    }
+    .link:hover{background:rgba(255,255,255,.07); border-color:rgba(59,130,246,.35)}
+
+    /* Contact */
+    .contact{
+      background:rgba(17,24,39,.72);
+      border:1px solid var(--line);
+      border-radius:24px;
+      padding:22px;
+      max-width:860px;
+      margin:0 auto;
+      text-align:center;
+    }
+    .social{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin-top:14px}
+    .social a{
+      text-decoration:none;
+      font-weight:900;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      color:var(--text);
+    }
+    .social a:hover{background:rgba(255,255,255,.07); border-color:rgba(59,130,246,.35)}
+
+    footer{
+      padding:30px 0;
+      border-top:1px solid var(--line);
+      color:var(--muted);
+      text-align:center;
+      font-weight:700;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .card{grid-column:span 6}
+      .project{grid-column:span 12}
+    }
+    @media (max-width: 600px){
+      nav ul{gap:8px}
+      nav a{padding:8px}
+      .card{grid-column:span 12}
+    }
+  </style>
 </head>
+
 <body>
-
-<div class="bg-gradient">
-  <div class="orb orb1"></div>
-  <div class="orb orb2"></div>
-  <div class="orb orb3"></div>
-  <div class="orb orb4"></div>
-</div>
-
-<nav id="navbar">
-  <div class="nav-content">
-    <div class="logo">SIV</div>
-    <ul>
-      <li><a href="#about" class="nav-link">About</a></li>
-      <li><a href="#skills" class="nav-link">Skills</a></li>
-      <li><a href="#projects" class="nav-link">Projects</a></li>
-      <li><a href="#contact" class="nav-link">Contact</a></li>
-    </ul>
-  </div>
-</nav>
-
-<section class="hero">
-  <div class="container">
-    <div class="hero-content">
-      <div class="status">
-        <span class="pulse"></span>
-        Available for Cloud Engineering Roles
-      </div>
-      <h1>Sivario Buchanan</h1>
-      <p>Cloud automation engineer building production-grade Python tools for AWS infrastructure. Turning manual workflows into reliable, repeatable systems.</p>
-      
-      <div class="tech-tags">
-        <span class="tag">Python</span>
-        <span class="tag">boto3</span>
-        <span class="tag">AWS</span>
-        <span class="tag">IAM</span>
-        <span class="tag">S3</span>
-        <span class="tag">EC2</span>
-        <span class="tag">CloudWatch</span>
-        <span class="tag">Bash</span>
-      </div>
-
-      <div class="buttons">
-        <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="btn btn-primary">View GitHub</a>
-        <a href="#projects" class="btn btn-secondary">Explore Projects</a>
-        <a href="/cdn-cgi/l/email-protection#4d3e243b2c3f24222f382e250d2a202c2421632e2220" class="btn btn-secondary">Get in Touch</a>
-      </div>
+  <nav>
+    <div class="container nav-content">
+      <a class="logo" href="#top">SIV</a>
+      <ul>
+        <li><a href="#about" class="nav-link">About</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#projects" class="nav-link">Projects</a></li>
+        <li><a href="#contact" class="nav-link">Contact</a></li>
+      </ul>
     </div>
-  </div>
-</section>
+  </nav>
 
-<section id="about">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-tag">About Me</span>
-      <h2>Building the Future</h2>
-      <p class="subtitle">I automate the boring parts, document the system, and make it easy to run again tomorrow.</p>
-    </div>
+  <main id="top">
+    <section class="hero">
+      <div class="container">
+        <div class="badge">Available for Cloud Engineering Roles</div>
+        <h1>Sivario Buchanan</h1>
+        <p class="muted">
+          Cloud automation engineer building production-grade Python tools for AWS infrastructure.
+          Turning manual workflows into reliable, repeatable systems.
+        </p>
 
-    <div class="stats animate-on-scroll">
-      <div class="stats-grid">
-        <div class="stat">
-          <h4>Python</h4>
-          <p>Primary Language</p>
+        <div class="pill-row" aria-label="Core tech">
+          <span class="pill">Python</span>
+          <span class="pill">boto3</span>
+          <span class="pill">AWS</span>
+          <span class="pill">IAM</span>
+          <span class="pill">S3</span>
+          <span class="pill">EC2</span>
+          <span class="pill">CloudWatch</span>
+          <span class="pill">Bash</span>
         </div>
-        <div class="stat">
-          <h4>AWS</h4>
-          <p>Cloud Platform</p>
-        </div>
-        <div class="stat">
-          <h4>boto3</h4>
-          <p>Automation Tool</p>
-        </div>
-        <div class="stat">
-          <h4>24/7</h4>
-          <p>Reliability</p>
+
+        <div class="btn-row">
+          <a class="btn primary" href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">View GitHub</a>
+          <a class="btn secondary" href="#projects">Explore Projects</a>
+
+          <!-- Email buttons get href set by JS (Gmail + mailto fallback) -->
+          <a id="emailGmail" class="btn secondary" href="#" target="_blank" rel="noopener">Email (Gmail)</a>
+          <a id="emailMailto" class="btn secondary" href="#">Email (Default)</a>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="grid">
-      <div class="card animate-on-scroll">
-        <div class="card-icon">→</div>
-        <h3>Philosophy</h3>
-        <p>Scripts over click-steps, least-privilege over "admin everywhere," and clear documentation that makes fixes obvious.</p>
-      </div>
-      <div class="card animate-on-scroll">
-        <div class="card-icon">/</div>
-        <h3>Approach</h3>
-        <p>If it needs a checklist every time, it should become a command. Repeatability is king.</p>
-      </div>
-      <div class="card animate-on-scroll">
-        <div class="card-icon">!</div>
-        <h3>Mindset</h3>
-        <p>Security + cost awareness + clarity. Clean structure over "it works once."</p>
-      </div>
-    </div>
-  </div>
-</section>
+    <section id="about">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge" style="border-color:rgba(139,92,246,.35); background:rgba(139,92,246,.12); color:var(--purple);">About</div>
+          <h2>Build it once. Run it forever.</h2>
+          <p class="muted">Scripts over click-steps. Least privilege over admin-everywhere. Repeatability is king.</p>
+        </div>
 
-<section id="skills">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-tag">Core Skills</span>
-      <h2>Tech Arsenal</h2>
-      <p class="subtitle">Python & Bash-first automation with AWS fundamentals and disciplined engineering practices.</p>
-    </div>
-
-    <div class="grid">
-      <div class="card animate-on-scroll">
-        <div class="card-icon">P</div>
-        <h3>Python Automation</h3>
-        <p>boto3 for AWS tasks, CLI tooling patterns, structured logging, and bulletproof error handling for production systems.</p>
-      </div>
-      <div class="card animate-on-scroll">
-        <div class="card-icon">C</div>
-        <h3>AWS Infrastructure</h3>
-        <p>IAM workflows, S3 deployments, EC2 routines, CloudFront distributions, and CloudWatch monitoring automation.</p>
-      </div>
-      <div class="card animate-on-scroll">
-        <div class="card-icon">D</div>
-        <h3>DevOps Tooling</h3>
-        <p>Bash scripting, Linux administration, SSH workflows, and system integration scripts that make infrastructure programmable.</p>
-      </div>
-      <div class="card animate-on-scroll">
-        <div class="card-icon">A</div>
-        <h3>Clean Architecture</h3>
-        <p>Reusable modules, config-driven systems, safe defaults, consistent repo structure, and maintainable code.</p>
-      </div>
-      <div class="card animate-on-scroll">
-        <div class="card-icon">S</div>
-        <h3>Security First</h3>
-        <p>Least-privilege IAM policies, encrypted secrets, audit logging, and security best practices baked into every script.</p>
-      </div>
-      <div class="card animate-on-scroll">
-        <div class="card-icon">O</div>
-        <h3>Observability</h3>
-        <p>Comprehensive logging, CloudWatch metrics, alert automation, and debugging workflows that surface issues fast.</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="projects">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-tag">Portfolio</span>
-      <h2>Featured Projects</h2>
-      <p class="subtitle">Production-ready automation scripts and tools. All code lives on GitHub with full documentation.</p>
-    </div>
-
-    <div class="projects-container">
-      <div class="projects-grid">
-        <div class="project-card animate-on-scroll">
-          <div class="project-header">
-            <span class="project-tag">Python • Bash • Package Management</span>
+        <div class="grid">
+          <div class="card">
+            <div class="tagline">Philosophy</div>
+            <h3>Automate + document</h3>
+            <p>Convert checklists into commands. Leave behind clean READMEs and safe defaults.</p>
           </div>
-          <div class="project-body">
+          <div class="card">
+            <div class="tagline">Approach</div>
+            <h3>Security + cost</h3>
+            <p>Least-privilege IAM, sensible logging, and tight feedback loops to avoid waste and risk.</p>
+          </div>
+          <div class="card">
+            <div class="tagline">Mindset</div>
+            <h3>Production-first</h3>
+            <p>Fail safely, log clearly, and make the next run easier than the last.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge" style="border-color:rgba(139,92,246,.35); background:rgba(139,92,246,.12); color:var(--purple);">Skills</div>
+          <h2>Core stack</h2>
+          <p class="muted">Python & Bash-first automation with AWS fundamentals and disciplined engineering practices.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card">
+            <h3>Python Automation</h3>
+            <p>boto3 scripting, CLI tooling patterns, structured logging, defensive error handling.</p>
+          </div>
+          <div class="card">
+            <h3>AWS Infrastructure</h3>
+            <p>IAM workflows, S3 operations, EC2 routines, and CloudWatch monitoring automation.</p>
+          </div>
+          <div class="card">
+            <h3>DevOps Tooling</h3>
+            <p>Bash scripting, Linux workflows, SSH routines, and integration scripts.</p>
+          </div>
+          <div class="card">
+            <h3>Clean Architecture</h3>
+            <p>Reusable modules, config-driven systems, safe defaults, maintainable structure.</p>
+          </div>
+          <div class="card">
+            <h3>Security First</h3>
+            <p>Least-privilege IAM, encrypted secrets handling, audit logging, secure patterns.</p>
+          </div>
+          <div class="card">
+            <h3>Observability</h3>
+            <p>Logs, metrics, alarms, and debugging workflows that surface issues quickly.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-head">
+          <div class="badge">Projects</div>
+          <h2>Featured work</h2>
+          <p class="muted">Production-ready automation scripts and tools. Code is on GitHub with documentation.</p>
+        </div>
+
+        <div class="grid">
+          <div class="card project">
+            <div class="meta">Python • Bash • Package Management</div>
             <h3>Pip Automated Package Manager</h3>
-            <p>A structured, Bash-based Python environment installer designed to automate categorized dependency management. Streamlines package installation with organized workflows.</p>
-            <div class="project-links">
-              <a href="https://github.com/siv-the-programmer/Pip_Automated_Package_Manager.git" target="_blank" rel="noopener" class="project-link link-primary">View Code</a>
-              <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="project-link link-secondary">Profile</a>
+            <p>A structured installer that automates categorized dependency management for Python environments.</p>
+            <div class="links">
+              <a class="link" href="https://github.com/siv-the-programmer/Pip_Automated_Package_Manager.git" target="_blank" rel="noopener">View Code</a>
+              <a class="link" href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">Profile</a>
             </div>
           </div>
-        </div>
 
-        <div class="project-card animate-on-scroll">
-          <div class="project-header">
-            <span class="project-tag">AWS • IAM • boto3</span>
-          </div>
-          <div class="project-body">
+          <div class="card project">
+            <div class="meta">AWS • IAM • boto3</div>
             <h3>AWS IAM Automation Suite</h3>
-            <p>Production-grade IAM user management through Python and boto3. Programmatic creation, configuration, and removal workflows with security best practices built in.</p>
-            <div class="project-links">
-              <a href="https://github.com/siv-the-programmer/aws_iam_automated_users.git" target="_blank" rel="noopener" class="project-link link-primary">View Code</a>
-              <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="project-link link-secondary">Profile</a>
+            <p>Programmatic IAM user management with security-first workflows and sane defaults.</p>
+            <div class="links">
+              <a class="link" href="https://github.com/siv-the-programmer/aws_iam_automated_users.git" target="_blank" rel="noopener">View Code</a>
+              <a class="link" href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">Profile</a>
             </div>
           </div>
-        </div>
 
-        <div class="project-card animate-on-scroll">
-          <div class="project-header">
-            <span class="project-tag">CLI • GitHub • Automation</span>
-          </div>
-          <div class="project-body">
+          <div class="card project">
+            <div class="meta">CLI • GitHub • Automation</div>
             <h3>CLI GitHub Menu</h3>
-            <p>Menu-driven automation for common GitHub workflows. Reduces repetitive commands and standardizes team workflows with an intuitive command-line interface.</p>
-            <div class="project-links">
-              <a href="https://github.com/siv-the-programmer/CLI_github_Menu_Automation.git" target="_blank" rel="noopener" class="project-link link-primary">View Code</a>
-              <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="project-link link-secondary">Profile</a>
+            <p>Menu-driven automation for common GitHub workflows to reduce repetitive commands.</p>
+            <div class="links">
+              <a class="link" href="https://github.com/siv-the-programmer/CLI_github_Menu_Automation.git" target="_blank" rel="noopener">View Code</a>
+              <a class="link" href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">Profile</a>
             </div>
           </div>
-        </div>
 
-        <div class="project-card animate-on-scroll">
-          <div class="project-header">
-            <span class="project-tag">AWS • Infrastructure • Tooling</span>
-          </div>
-          <div class="project-body">
+          <div class="card project">
+            <div class="meta">More</div>
             <h3>More Projects</h3>
-            <p>Additional automation scripts, cloud infrastructure tools, and experimental builds. Everything documented, tested, and production-ready for immediate deployment.</p>
-            <div class="project-links">
-              <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="project-link link-primary">Explore GitHub</a>
+            <p>Additional automation scripts, cloud tooling, and experimental builds.</p>
+            <div class="links">
+              <a class="link" href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">Explore GitHub</a>
             </div>
           </div>
         </div>
       </div>
+    </section>
 
-      <div class="project-features">
-        <div class="card animate-on-scroll">
-          <div class="card-icon">D</div>
-          <h3>Documentation</h3>
-          <p>Every repo includes a README with setup instructions, usage examples, and troubleshooting guides.</p>
+    <section id="contact">
+      <div class="container">
+        <div class="section-head" style="text-align:center">
+          <div class="badge">Contact</div>
+          <h2>Let’s connect</h2>
         </div>
-        <div class="card animate-on-scroll">
-          <div class="card-icon">R</div>
-          <h3>Production Ready</h3>
-          <p>Scripts fail safely with clear error messages. Logging and structure make debugging obvious.</p>
-        </div>
-        <div class="card animate-on-scroll">
-          <div class="card-icon">M</div>
-          <h3>Reusability</h3>
-          <p>Modular design, config files, and consistent patterns make code easy to adapt and extend.</p>
+
+        <div class="contact">
+          <h3 style="font-size:22px; margin-bottom:10px;">Email is best</h3>
+          <p class="muted" style="max-width:700px; margin:0 auto;">
+            Reference a repo or describe what you want to build. Include goals, constraints, and timeline.
+          </p>
+
+          <div class="btn-row" style="justify-content:center;">
+            <a id="emailGmail2" class="btn primary" href="#" target="_blank" rel="noopener">Open Gmail Compose</a>
+            <a id="emailMailto2" class="btn secondary" href="#">Open Default Email App</a>
+          </div>
+
+          <div class="social">
+            <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener">GitHub</a>
+            <a href="https://www.linkedin.com/in/sivario-buchanan-546a40386" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://www.instagram.com/sivbuchanan" target="_blank" rel="noopener">Instagram</a>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section id="contact">
-  <div class="container">
-    <div class="section-header animate-on-scroll">
-      <span class="section-tag">Get in Touch</span>
-      <h2>Let's Connect</h2>
-    </div>
-
-    <div class="contact-box animate-on-scroll">
-      <h3>Ready to collaborate?</h3>
-      <p>Email is best. Reference a repo or describe what you want to build. Include context, goals, and any time/budget constraints.</p>
-      
-      <a href="sivariobuch@gmail.com" class="btn btn-primary">Send Email</a>
-
-      <div class="social-links">
-        <a href="https://github.com/siv-the-programmer" target="_blank" rel="noopener" class="social-link" title="GitHub">GH</a>
-        <a href="https://www.linkedin.com/in/sivario-buchanan-546a40386" target="_blank" rel="noopener" class="social-link" title="LinkedIn">in</a>
-        <a href="https://www.instagram.com/sivbuchanan" target="_blank" rel="noopener" class="social-link" title="Instagram">IG</a>
+    <footer>
+      <div class="container">
+        © 2025 Sivario Buchanan • Python • Cloud • Automation
       </div>
-    </div>
-  </div>
-</section>
+    </footer>
+  </main>
 
-<footer>
-  <div class="container">
-    <p>&copy; 2025 Sivario Buchanan • Python • Cloud • Automation</p>
-  </div>
-</footer>
+  <script>
+    // Active nav link (lightweight)
+    (() => {
+      const links = [...document.querySelectorAll(".nav-link")];
+      const sections = links
+        .map(a => document.querySelector(a.getAttribute("href")))
+        .filter(Boolean);
 
-<div class="scroll-to-top" id="scrollToTop">↑</div>
+      const setActive = (id) => {
+        links.forEach(a => a.classList.toggle("active", a.getAttribute("href") === "#" + id));
+      };
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-// Smooth scrolling for navigation links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    e.preventDefault();
-    const target = document.querySelector(this.getAttribute('href'));
-    if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  });
-});
+      const obs = new IntersectionObserver((entries) => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a,b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      }, { rootMargin: "-30% 0px -60% 0px", threshold: [0.1, 0.2, 0.3, 0.4, 0.5] });
 
-// Navbar scroll effect
-const navbar = document.getElementById('navbar');
-let lastScroll = 0;
+      sections.forEach(s => obs.observe(s));
+    })();
 
-window.addEventListener('scroll', () => {
-  const currentScroll = window.pageYOffset;
-  
-  if (currentScroll > 100) {
-    navbar.classList.add('scrolled');
-  } else {
-    navbar.classList.remove('scrolled');
-  }
-  
-  lastScroll = currentScroll;
-});
+    // Prefilled email (Gmail + mailto fallback)
+    (() => {
+      const to = "sivariobuch@gmail.com";
+      const subject = "Cloud Engineering Opportunity - Sivario Buchanan";
+      const body = [
+        "Hi Sivario,",
+        "",
+        "I came across your portfolio/GitHub and I’d like to connect.",
+        "",
+        "Context:",
+        "- Company:",
+        "- Role:",
+        "- Stack (AWS/services):",
+        "- Timeline:",
+        "",
+        "Links (optional):",
+        "- Job spec:",
+        "- Repo referenced:",
+        "",
+        "Regards,",
+        "[Your Name]"
+      ].join("\n");
 
-// Active navigation link
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-link');
+      const enc = encodeURIComponent;
 
-window.addEventListener('scroll', () => {
-  let current = '';
-  
-  sections.forEach(section => {
-    const sectionTop = section.offsetTop;
-    const sectionHeight = section.clientHeight;
-    if (pageYOffset >= sectionTop - 200) {
-      current = section.getAttribute('id');
-    }
-  });
-  
-  navLinks.forEach(link => {
-    link.classList.remove('active');
-    if (link.getAttribute('href').slice(1) === current) {
-      link.classList.add('active');
-    }
-  });
-});
+      const gmail = `https://mail.google.com/mail/?view=cm&fs=1&to=${enc(to)}&su=${enc(subject)}&body=${enc(body)}`;
+      const mailto = `mailto:${to}?subject=${enc(subject)}&body=${enc(body)}`;
 
-// Cursor trail effect
-let lastTrailTime = 0;
-const trailDelay = 30;
-
-document.addEventListener('mousemove', (e) => {
-  const currentTime = Date.now();
-  
-  if (currentTime - lastTrailTime > trailDelay) {
-    const trail = document.createElement('div');
-    trail.className = 'cursor-trail';
-    trail.style.left = e.pageX + 'px';
-    trail.style.top = e.pageY + 'px';
-    document.body.appendChild(trail);
-    
-    setTimeout(() => trail.remove(), 800);
-    lastTrailTime = currentTime;
-  }
-});
-
-// Scroll to top button
-const scrollToTopBtn = document.getElementById('scrollToTop');
-
-window.addEventListener('scroll', () => {
-  if (window.pageYOffset > 500) {
-    scrollToTopBtn.classList.add('visible');
-  } else {
-    scrollToTopBtn.classList.remove('visible');
-  }
-});
-
-scrollToTopBtn.addEventListener('click', () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-});
-
-// Intersection Observer for animations
-const observerOptions = {
-  threshold: 0.1,
-  rootMargin: '0px 0px -100px 0px'
-};
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('animated');
-    }
-  });
-}, observerOptions);
-
-document.querySelectorAll('.animate-on-scroll').forEach(el => {
-  observer.observe(el);
-});
-
-// Add interactive card tilt effect
-document.querySelectorAll('.card, .project-card').forEach(card => {
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-    
-    const rotateX = (y - centerY) / 20;
-    const rotateY = (centerX - x) / 20;
-    
-    card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-10px) scale(1.02)`;
-  });
-  
-  card.addEventListener('mouseleave', () => {
-    card.style.transform = '';
-  });
-});
-
-// Tag click animation
-document.querySelectorAll('.tag').forEach(tag => {
-  tag.addEventListener('click', function() {
-    this.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-      this.style.transform = '';
-    }, 200);
-  });
-});
-
-// Stats counter animation
-const animateCounter = (element, target) => {
-  let current = 0;
-  const increment = target / 50;
-  const timer = setInterval(() => {
-    current += increment;
-    if (current >= target) {
-      element.textContent = target;
-      clearInterval(timer);
-    } else {
-      element.textContent = Math.floor(current);
-    }
-  }, 30);
-};
-
-// Trigger counter animation when stats section is visible
-const statsObserver = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      const stats = entry.target.querySelectorAll('.stat h4');
-      stats.forEach(stat => {
-        const text = stat.textContent;
-        if (!isNaN(text)) {
-          animateCounter(stat, parseInt(text));
-        }
+      ["emailGmail","emailGmail2"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.href = gmail;
       });
-      statsObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.8 });
-statsObserver.observe(document.querySelector('.stats'));
-</script>
+
+      ["emailMailto","emailMailto2"].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.href = mailto;
+      });
+    })();
+  </script>
 </body>
-</html> 
+</html>
