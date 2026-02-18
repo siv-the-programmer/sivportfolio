@@ -1,6 +1,6 @@
 # Portfolio
 
-![GitHub last commit](https://img.shields.io/github/last-commit/siv-the-programmer/Pip_Automated_Package_Manager?style=for-the-badge)
+![GitHub last commit](https://img.shields.io/github/last-commit/siv-the-programmer/sivportfolio?style=for-the-badge)
 
 This repository hosts my personal portfolio website, published using GitHub Pages.
 
